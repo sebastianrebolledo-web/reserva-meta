@@ -1,0 +1,15 @@
+.venv
+__pycache__
+*.pyc
+*.pyo
+.env
+*.db
+*.db-shm
+*.db-wal
+.pytest_cache
+tests/
+scripts/
+credentials.json
+service-account.json
+token.json
+README.md

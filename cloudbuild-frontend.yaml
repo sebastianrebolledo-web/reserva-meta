@@ -1,0 +1,17 @@
+steps:
+  # Construye la imagen del Frontend con el ARG NEXT_PUBLIC_API_URL inyectado en build time
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_API_URL=$_NEXT_PUBLIC_API_URL'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/tecfluid-vr-frontend'
+      - '.'
+    dir: 'frontend'
+
+images:
+  - 'gcr.io/$PROJECT_ID/tecfluid-vr-frontend'
+
+# Tiempo máximo de build: 20 minutos (Next.js puede tardar en compilar)
+timeout: '1200s'
