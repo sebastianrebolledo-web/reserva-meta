@@ -31,14 +31,24 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Configuración de CORS segura
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.cors_origins or ["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Configuración de CORS segura (soporta localhost y cualquier dominio en la nube sin rechazos)
+cors_list = settings.cors_origins
+if "*" in cors_list:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origin_regex=r"^https?://.*",
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+else:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=cors_list,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 # Inclusión de rutas v1
 app.include_router(api_router, prefix="/api/v1")

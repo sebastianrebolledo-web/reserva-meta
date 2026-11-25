@@ -118,15 +118,15 @@ BACKEND_URL=$(gcloud run services describe "$BACKEND_SERVICE" \
 echo "✓ Backend listo en: $BACKEND_URL"
 
 # ──────────────────────────────────────────────
-# PASO 4: Build Frontend con la URL del Backend inyectada
-# (usa cloudbuild-frontend.yaml para pasar --build-arg correctamente)
+# PASO 4: Build Frontend (sin URL del Backend en build time)
+# La URL del backend se inyecta en RUNTIME vía BACKEND_INTERNAL_URL al hacer deploy.
+# Esto permite reutilizar la misma imagen si cambia el backend URL.
 # ──────────────────────────────────────────────
 echo ""
 echo "4/6. Construyendo imagen de Frontend en Cloud Build..."
-echo "     NEXT_PUBLIC_API_URL=$BACKEND_URL"
+echo "     (BACKEND_INTERNAL_URL se inyectará en runtime: $BACKEND_URL)"
 gcloud builds submit . \
   --config cloudbuild-frontend.yaml \
-  --substitutions "_NEXT_PUBLIC_API_URL=$BACKEND_URL" \
   --project "$PROJECT_ID"
 
 # ──────────────────────────────────────────────
@@ -142,7 +142,7 @@ gcloud run deploy "$FRONTEND_SERVICE" \
   --allow-unauthenticated \
   --port 8080 \
   --memory 512Mi \
-  --set-env-vars "NODE_ENV=production,PORT=8080" \
+  --set-env-vars "NODE_ENV=production,PORT=8080,BACKEND_INTERNAL_URL=$BACKEND_URL" \
   --quiet
 
 FRONTEND_URL=$(gcloud run services describe "$FRONTEND_SERVICE" \
