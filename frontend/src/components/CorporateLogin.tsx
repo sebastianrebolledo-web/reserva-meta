@@ -19,7 +19,7 @@ export default function CorporateLogin({
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
   // Paso 1: Solicitar código OTP al correo corporativo
   const handleRequestCode = async (e: React.FormEvent) => {

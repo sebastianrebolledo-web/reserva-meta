@@ -129,7 +129,7 @@ export default function ReservationForm({ userEmail, authToken, onLogout }: Rese
       notes: notes.trim() || null,
     };
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
     try {
       // Uso de fetch nativo conforme a la regla de cero dependencias

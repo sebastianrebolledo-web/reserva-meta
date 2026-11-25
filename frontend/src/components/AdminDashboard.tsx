@@ -41,7 +41,7 @@ export default function AdminDashboard({ token, adminEmail, onLogout }: AdminDas
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("TODOS");
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
   const fetchData = useCallback(async () => {
     setLoading(true);

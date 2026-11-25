@@ -34,7 +34,7 @@ export default function AdminPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
   // Step 1: Request OTP code via Gmail
   const handleRequestCode = async (e: React.FormEvent) => {
